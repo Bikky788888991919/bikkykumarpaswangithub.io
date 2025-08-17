@@ -1,200 +1,76 @@
-import csv
-import pickle
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sports Management System</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f9f9f9;
+    }
+    h1 {
+      color: #2c3e50;
+    }
+    pre {
+      background: #272822;
+      color: #f8f8f2;
+      padding: 15px;
+      border-radius: 8px;
+      overflow-x: auto;
+    }
+    a {
+      display: inline-block;
+      margin-top: 20px;
+      text-decoration: none;
+      color: white;
+      background: #3498db;
+      padding: 8px 12px;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Sports Management System (Python)</h1>
+  <p>Here is the Python code for my project:</p>
 
-CSV_FILE = "sports_data.csv"
-BIN_FILE = "sports_data.dat"
+  <pre><code>
+# Sports Management System in Python
 
-# ---------- Utility Functions ----------
+class Player:
+    def __init__(self, name, sport):
+        self.name = name
+        self.sport = sport
 
-def load_data():
-    """Load existing data from CSV file (if exists)."""
-    data = []
-    try:
-        with open(CSV_FILE, "r", newline='') as f:
-            reader = csv.reader(f)
-            data = list(reader)
-    except FileNotFoundError:
-        pass  # file doesn’t exist yet
-    return data
-
-def save_data_csv(data):
-    """Save data to CSV file."""
-    with open(CSV_FILE, "w", newline='') as f:
-        writer = csv.writer(f)
-        writer.writerows(data)
-
-def save_data_bin(data):
-    """Save data to binary file."""
-    with open(BIN_FILE, "wb") as f:
-        pickle.dump(data, f)
-
-def read_data_bin():
-    """Read data from binary file safely (handle EOFError)."""
-    try:
-        with open(BIN_FILE, "rb") as f:
-            try:
-                return pickle.load(f)
-            except EOFError:
-                return []  # file is empty
-    except FileNotFoundError:
-        return []  # file doesn’t exist
-
-# ---------- Core Functions ----------
-
-def append_data():
-    name = input("Enter player name: ")
-    sport = input("Enter sport: ")
-    age = input("Enter age: ")
-
-    data = load_data()
-    data.append([name, sport, age])
-
-    save_data_csv(data)
-    save_data_bin(data)
-    print("✅ Data added successfully to CSV and Binary files!")
-
-def search_data():
-    keyword = input("Enter player name to search: ").lower()
-
-    # Search in CSV data
-    csv_data = load_data()
-    found = [row for row in csv_data if keyword in row[0].lower()]
-
-    if found:
-        print("\n🔎 Found in CSV:")
-        for row in found:
-            print(row)
-    else:
-        print("\n❌ Not found in CSV file.")
-
-    # Search in Binary data
-    bin_data = read_data_bin()
-    found_bin = [row for row in bin_data if keyword in row[0].lower()]
-
-    if found_bin:
-        print("\n🔎 Found in Binary file:")
-        for row in found_bin:
-            print(row)
-    else:
-        print("\n❌ Not found in Binary file.")
-
-def display_all():
-    """Display all records from CSV file"""
-    data = load_data()
-    if not data:
-        print("\n⚠ No records available.")
-    else:
-        print("\n📋 All Players Records:")
-        for row in data:
-            print(row)
-
-# ---------- Main Menu ----------
-
-while True:
-    print("\n--- Sports Management System ---")
-    print("1. Add New Data")
-    print("2. Search Data")
-    print("3. Display All Data")
-    print("4. Exit")
-
-    choice = input("Enter choice: ")
-
-    if choice == "1":
-        append_data()
-    elif choice == "2":
-        search_data()
-    elif choice == "3":
-        display_all()
-    elif choice == "4":
-        print("👋 Exiting program...")
-        break
-    else:
-        print("❌ Invalid choice! Try again.")
+    def display(self):
+        print(f"Player: {self.name}, Sport: {self.sport}")
 
 
+class Team:
+    def __init__(self, team_name):
+        self.team_name = team_name
+        self.players = []
+
+    def add_player(self, player):
+        self.players.append(player)
+
+    def display_team(self):
+        print(f"\nTeam: {self.team_name}")
+        for p in self.players:
+            p.display()
 
 
+# Example usage
+p1 = Player("Rohit Sharma", "Cricket")
+p2 = Player("Sunil Chhetri", "Football")
 
+team = Team("National Heroes")
+team.add_player(p1)
+team.add_player(p2)
 
+team.display_team()
+  </code></pre>
 
-
--- Sports Management System ---
-1. Add New Data
-2. Search Data
-3. Display All Data
-4. Exit
-Enter choice: 1
-Enter player name: Virat
-Enter sport: Cricket
-Enter age: 35
-✅ Data added successfully to CSV and Binary files!
-
---- Sports Management System ---
-1. Add New Data
-2. Search Data
-3. Display All Data
-4. Exit
-Enter choice: 1
-Enter player name: Messi
-Enter sport: Football
-Enter age: 38
-✅ Data added successfully to CSV and Binary files!
-
---- Sports Management System ---
-1. Add New Data
-2. Search Data
-3. Display All Data
-4. Exit
-Enter choice: 1
-Enter player name: Neeraj
-Enter sport: Javelin
-Enter age: 27
-✅ Data added successfully to CSV and Binary files!
-
---- Sports Management System ---
-1. Add New Data
-2. Search Data
-3. Display All Data
-4. Exit
-Enter choice: 2
-Enter player name to search: messi
-
-🔎 Found in CSV:
-['Messi', 'Football', '38']
-
-🔎 Found in Binary file:
-['Messi', 'Football', '38']
-
---- Sports Management System ---
-1. Add New Data
-2. Search Data
-3. Display All Data
-4. Exit
-Enter choice: 2
-Enter player name to search: Ronaldo
-
-❌ Not found in CSV file.
-❌ Not found in Binary file.
-
---- Sports Management System ---
-1. Add New Data
-2. Search Data
-3. Display All Data
-4. Exit
-Enter choice: 3
-
-📋 All Players Records:
-['Virat', 'Cricket', '35']
-['Messi', 'Football', '38']
-['Neeraj', 'Javelin', '27']
-
---- Sports Management System ---
-1. Add New Data
-2. Search Data
-3. Display All Data
-4. Exit
-Enter choice: 4
-👋 Exiting program...
-
-
-        
+  <a href="index.html">⬅ Back to Home</a>
+</body>
+</html>
