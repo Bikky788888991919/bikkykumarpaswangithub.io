@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sports Management System - Project Code</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: #f9f9f9;
+      color: #333;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #0066cc;
+    }
+    pre {
+      background: #1e1e1e;
+      color: #dcdcdc;
+      padding: 20px;
+      border-radius: 10px;
+      overflow-x: auto;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    a {
+      display: block;
+      margin-top: 20px;
+      text-align: center;
+      color: #0066cc;
+      font-weight: bold;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Sports Management System - Project Code</h1>
+
+  <p>This page contains the Python code for the Sports Management System project. You can copy it and try running it in your system.</p>
+
+  <pre>
+# Sports Management System Project in Python
+# Created by: Om Prakash Jena and Amitav Das, Class 12
+
+sports = {}
+
+def add_player():
+    name = input("Enter player name: ")
+    game = input("Enter sport/game: ")
+    sports[name] = game
+    print(f"Player {name} added successfully.")
+
+def view_players():
+    if not sports:
+        print("No players added yet.")
+    else:
+        print("Player List:")
+        for name, game in sports.items():
+            print(f"{name} - {game}")
+
+def remove_player():
+    name = input("Enter player name to remove: ")
+    if name in sports:
+        del sports[name]
+        print(f"Player {name} removed successfully.")
+    else:
+        print("Player not found.")
+
+def main():
+    while True:
+        print("\n--- Sports Management System ---")
+        print("1. Add Player")
+        print("2. View Players")
+        print("3. Remove Player")
+        print("4. Exit")
+        
+        choice = input("Enter your choice: ")
+        
+        if choice == "1":
+            add_player()
+        elif choice == "2":
+            view_players()
+        elif choice == "3":
+            remove_player()
+        elif choice == "4":
+            print("Exiting program...")
+            break
+        else:
+            print("Invalid choice! Please try again.")
+
+if __name__ == "__main__":
+    main()
+  </pre>
+
+  <a href="index.html">⬅ Back to Home</a>
+
+</body>
+</html>
