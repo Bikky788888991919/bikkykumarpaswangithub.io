@@ -1,0 +1,133 @@
+# 🏆 Sports Management System
+
+This is a simple project in Python that manages players' data using **CSV** and **Binary files**.  
+
+---
+
+## 📌 Features
+1. Add new player data  
+2. Search player data  
+3. Display all players data  
+4. Exit program  
+
+---
+
+## 💻 Python Code
+
+```python
+import csv
+import pickle
+
+csv_file = "players.csv"
+bin_file = "players.dat"
+
+def add_data():
+    name = input("Enter player name: ").title()
+    sport = input("Enter sport: ").title()
+    age = input("Enter age: ")
+
+    # Save to CSV
+    with open(csv_file, "a", newline="") as f:
+        writer = csv.writer(f)
+        writer.writerow([name, sport, age])
+
+    # Save to Binary
+    with open(bin_file, "ab") as f:
+        pickle.dump([name, sport, age], f)
+
+    print(" Data added successfully!")
+
+def search_data():
+    search_name = input("Enter player name to search: ").title()
+    found = False
+
+    # Search in CSV
+    with open(csv_file, "r") as f:
+        reader = csv.reader(f)
+        for row in reader:
+            if row and row[0] == search_name:
+                print(" Found in CSV:", row)
+                found = True
+                break
+    if not found:
+        print(" Not found in CSV file.")
+
+    # Search in Binary
+    found = False
+    try:
+        with open(bin_file, "rb") as f:
+            while True:
+                try:
+                    row = pickle.load(f)
+                    if row[0] == search_name:
+                        print(" Found in Binary file:", row)
+                        found = True
+                        break
+                except EOFError:
+                    break
+    except FileNotFoundError:
+        pass
+
+    if not found:
+        print(" Not found in Binary file.")
+
+def display_all():
+    print("\n All Players Records:")
+    with open(csv_file, "r") as f:
+        reader = csv.reader(f)
+        for row in reader:
+            if row:
+                print(row)
+
+while True:
+    print("\n--- Sports Management System ---")
+    print("1. Add New Data")
+    print("2. Search Data")
+    print("3. Display All Data")
+    print("4. Exit")
+    choice = input("Enter choice: ")
+
+    if choice == "1":
+        add_data()
+    elif choice == "2":
+        search_data()
+    elif choice == "3":
+        display_all()
+    elif choice == "4":
+        print(" Exiting program...")
+        break
+    else:
+        print(" Invalid choice. Try again.")
+📷 Sample Output
+pgsql
+Copy
+Edit
+--- Sports Management System ---
+1. Add New Data
+2. Search Data
+3. Display All Data
+4. Exit
+Enter choice: 1
+Enter player name: Virat
+Enter sport: Cricket
+Enter age: 35
+Data added successfully!
+Author: Om Prakash Jena & Amitav Das (Class 12)
+🔗 Back to Home
+
+yaml
+Copy
+Edit
+
+---
+
+### 🔹 Step 4: Commit changes
+- Scroll down → Write commit message → Click **Commit new file**.
+
+---
+
+### 🔹 Step 5: Add link in homepage
+Open your `index.md` or `index.html` file and add:
+
+```markdown
+- [Sports Management System Project](./sports-management-system.md)
